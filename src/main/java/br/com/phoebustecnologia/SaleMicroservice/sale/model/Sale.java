@@ -23,8 +23,9 @@ public class Sale implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "client_Id")
-    private Long clientId;
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable(name = "Clients_Sales",joinColumns = @JoinColumn(name = "Sale_Id"),inverseJoinColumns =@JoinColumn(name ="Client_id"))
+    private Set<Client> client;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "Books_Sales",joinColumns = @JoinColumn(name = "Sale_Id"),inverseJoinColumns =@JoinColumn(name ="Book_id"))
@@ -53,6 +54,7 @@ public class Sale implements Serializable {
     public static Sale saleConvertDTO(SaleDTO saleEntity){
         return Sale.builder()
                 .id(saleEntity.getId())
+                .client(saleEntity.getClient())
                 .bookPurchase(saleEntity.getBookPurchase())
                 .valuePurchase(saleEntity.getValuePurchase())
                 .datePurchase(saleEntity.getDatePurchase())

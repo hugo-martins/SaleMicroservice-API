@@ -1,5 +1,6 @@
 package br.com.phoebustecnologia.SaleMicroservice.sale.dto;
 
+import br.com.phoebustecnologia.SaleMicroservice.sale.model.Client;
 import br.com.phoebustecnologia.SaleMicroservice.sale.model.SexClient;
 import lombok.*;
 
@@ -25,7 +26,7 @@ public class ClientDTO implements Serializable {
     @Enumerated(EnumType.STRING)
     private SexClient sex;
 
-    public static ClientDTO clientSaleDTO(ClientDTO entity){
+    public static ClientDTO clientSaleDTO(Client entity){
         return builder()
                 .name(entity.getName())
                 .phone(entity.getPhone())

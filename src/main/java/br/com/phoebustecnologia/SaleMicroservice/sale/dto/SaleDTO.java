@@ -25,7 +25,7 @@ public class SaleDTO implements Serializable {
     private static final long SerialVersionId =  1L;
     private Long id;
 
-    private Long clientId;
+    private Set<Client> client;
 
     private Set<Book> bookPurchase;
 
@@ -41,7 +41,7 @@ public class SaleDTO implements Serializable {
     public static SaleDTO saleDTO(Sale saleEntity){
         return builder()
                 .id(saleEntity.getId())
-                .clientId(saleEntity.getClientId())
+                .client(saleEntity.getClient())
                 .bookPurchase(saleEntity.getBookPurchase())
                 .valuePurchase(saleEntity.getValuePurchase())
                 .datePurchase(saleEntity.getDatePurchase())
@@ -55,7 +55,7 @@ public class SaleDTO implements Serializable {
 
     public static SaleDTO saleSavedDTO(Sale saleEntity){
         return builder()
-                .clientId(saleEntity.getClientId())
+                .client(saleEntity.getClient())
                 .bookPurchase(saleEntity.getBookPurchase())
                 .valuePurchase(saleEntity.getValuePurchase())
                 .datePurchase(saleEntity.getDatePurchase())

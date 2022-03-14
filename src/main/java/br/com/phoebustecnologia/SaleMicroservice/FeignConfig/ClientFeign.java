@@ -17,5 +17,5 @@ public interface ClientFeign {
     Optional<Client> findByEmail(@PathVariable String email );
 
     @GetMapping(value = "clients/{id}")
-    Client clientById(@PathVariable Long id);
+    ClientDTO clientById(@PathVariable Long id);
 }

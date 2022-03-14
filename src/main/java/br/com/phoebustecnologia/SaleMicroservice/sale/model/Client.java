@@ -1,6 +1,7 @@
 package br.com.phoebustecnologia.SaleMicroservice.sale.model;
 
 import br.com.phoebustecnologia.SaleMicroservice.sale.dto.ClientDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,7 +33,8 @@ public class Client implements Serializable {
 
     private SexClient sex;
 
-    @OneToMany(mappedBy = "clientId")
+    @JsonIgnore
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Sale> sale;
 
     public static Client clientSaved (ClientDTO dto){

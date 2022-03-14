@@ -1,7 +1,9 @@
 package br.com.phoebustecnologia.SaleMicroservice.sale.service;
 
 import br.com.phoebustecnologia.SaleMicroservice.FeignConfig.ClientFeign;
+import br.com.phoebustecnologia.SaleMicroservice.sale.dto.BookDTO;
 import br.com.phoebustecnologia.SaleMicroservice.sale.dto.ClientDTO;
+import br.com.phoebustecnologia.SaleMicroservice.sale.model.Book;
 import br.com.phoebustecnologia.SaleMicroservice.sale.model.Client;
 import br.com.phoebustecnologia.SaleMicroservice.sale.repositories.ClientRepository;
 import feign.FeignException;
@@ -19,16 +21,13 @@ public class ClientServiceImpl {
     @Autowired
     private ClientFeign clientFeign;
 
-    public Optional<Client> findByEmail(String email) {
-        return clientRepository.findByEmail(email);
-    }
 
-
-    public Client findByClient(Long id) {
-        Client client = clientFeign.clientById(id);
+    public ClientDTO findByClient(Long id) {
+        ClientDTO clientDTO = clientFeign.clientById(id);
         try {
-            if (clientRepository.existsById(id));
-                return clientRepository.save(client);
+            if (clientRepository.existsById(id)) ;
+            Client client = clientRepository.save(Client.clientSaved(clientDTO));
+            return ClientDTO.clientSaleDTO(client);
 
         } catch (FeignException e) {
             throw new FeignException.BadRequest("Client Not Found: " + Client.class, null, null, null);

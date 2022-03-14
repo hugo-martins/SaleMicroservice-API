@@ -74,12 +74,17 @@ public class SaleServicesImpl implements SaleService {
             bookRepository.save(book);
 
         }
-        Client clientById = clientService.findByClient(saleDTO.getClientId());
-        clientRepository.save(clientById);
+        Set<Client> clientSet = new HashSet<>();
+        for (Client c : saleDTO.getClient()){
+            ClientDTO clientDTO = clientService.findByClient(c.getId());
+            Client client = Client.clientSaved(clientDTO);
+            clientSet.add(client);
+            clientRepository.save(client);
 
+        }
 
         Sale saleSaved = Sale.saleConvertDTO(saleDTO);
-        saleSaved.setClientId(clientById.getId());
+        saleSaved.setClient(clientSet);
         saleSaved.setBookPurchase(bookSet);
 
         saleSaved.setDatePurchase(OffsetDateTime.now());
@@ -123,7 +128,7 @@ public class SaleServicesImpl implements SaleService {
 
     //Método para salvar e atualizar entidades das vendas
     public void updateValuesSale(Sale newObj, Sale oldObj){
-        newObj.setClientId(oldObj.getClientId());
+        newObj.setClient(oldObj.getClient());
         newObj.setBookPurchase(oldObj.getBookPurchase());
         newObj.setValuePurchase(oldObj.getValuePurchase());
         newObj.setDatePurchase(oldObj.getDatePurchase());
